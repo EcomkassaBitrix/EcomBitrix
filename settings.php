@@ -1,5 +1,5 @@
 <?php
-define('C_REST_CLIENT_ID','');//Application ID
+define('C_REST_CLIENT_ID','-');//Application ID
 define('C_REST_CLIENT_SECRET','');//Application key
 
 define('C_REST_MYSQL_DBNAME','');//
