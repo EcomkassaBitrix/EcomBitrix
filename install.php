@@ -1,6 +1,12 @@
 <?php
 require_once (__DIR__.'/crest.php');
-
+echo('1');
+$stmt = $db->prepare("SELECT * FROM users WHERE `id` = ?");
+$id = 1;
+$stmt->execute([$id]);
+$userData = $stmt->fetch(PDO::FETCH_LAZY);
+echo($userData['unix_install']);
+exit;
 $result = CRest::installApp();
 if($result['rest_only'] === false):?>
     <head>
