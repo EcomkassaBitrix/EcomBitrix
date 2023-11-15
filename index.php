@@ -1,5 +1,7 @@
 <?php
 
+    echo(1);
+    exit;
     require_once (__DIR__.'/lib.php');
 
     // put an example below
