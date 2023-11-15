@@ -8,9 +8,8 @@ define('C_REST_MYSQL_PASSWORD','YEXprx62868');//
 
 define('C_REST_FIELD_KASSANAME','URLFORPAYECOMKASSA');//
 define('C_REST_FIELD_PAYNAME','Ссылка оплаты EcomKassa');//
-
 try {
-    $db = new PDO('mysql:host=localhost;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
+    $db = new PDO('mysql:host=node165261-ecomkassa-bitrix.mircloud.ru;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
 } catch (PDOException $e) {
     die();
 }

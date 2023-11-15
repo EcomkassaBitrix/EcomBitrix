@@ -1,6 +1,7 @@
 <?php
-require_once (__DIR__.'/crest.php');
 echo('1');
+require_once (__DIR__.'/crest.php');
+
 $stmt = $db->prepare("SELECT * FROM users WHERE `id` = ?");
 $id = 1;
 $stmt->execute([$id]);
