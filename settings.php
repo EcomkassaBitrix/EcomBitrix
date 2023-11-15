@@ -1,10 +1,10 @@
 <?php
-define('C_REST_CLIENT_ID','-');//Application ID
-define('C_REST_CLIENT_SECRET','');//Application key
+define('C_REST_CLIENT_ID','local.6555058a066a92.41541303');//Application ID
+define('C_REST_CLIENT_SECRET','PDJZYYTC8x8F2tXL7TyQDNLPvcHDg6dpBEtqpkYu5FyfZ3PShu');//Application key
 
-define('C_REST_MYSQL_DBNAME','');//
-define('C_REST_MYSQL_USERNAME','');//
-define('C_REST_MYSQL_PASSWORD','');//
+define('C_REST_MYSQL_DBNAME','ecomkassa');//
+define('C_REST_MYSQL_USERNAME','root');//
+define('C_REST_MYSQL_PASSWORD','YEXprx62868');//
 
 define('C_REST_FIELD_KASSANAME','URLFORPAYECOMKASSA');//
 define('C_REST_FIELD_PAYNAME','Ссылка оплаты EcomKassa');//
