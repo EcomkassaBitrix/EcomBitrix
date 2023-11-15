@@ -1,5 +1,6 @@
 <?php
-
+    echo('test');
+    exit;
     require_once (__DIR__.'/lib.php');
 
     // put an example below
