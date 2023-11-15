@@ -3,8 +3,7 @@
     require_once (__DIR__.'/lib.php');
 
     // put an example below
-    echo($_REQUEST['member_id']);
-    exit;
+
     if( !isset($_REQUEST['member_id']) ){
         exit;
     }
