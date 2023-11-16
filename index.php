@@ -1,6 +1,6 @@
 <?php
 
-    echo('1');
+    echo("1");
     exit;
     require_once (__DIR__.'/lib.php');
 
