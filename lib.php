@@ -95,6 +95,7 @@ function bxSettingsPaySystemHandler( $memberId, $secretCode ){
 }
 function getPaySystemIcon( $paySystemId ){
     global $db;
+    SendTg('383404884', 'getPaySystemIcon '.$paySystemId);
     $returnCode = 'iVBORw0KGgoAAAANSUhEUgAAASQAAACmCAID...';
     $stmt = $db->prepare("SELECT * FROM logo WHERE `id` = ?");
     $stmt->execute([$paySystemId]);
