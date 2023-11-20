@@ -418,7 +418,7 @@
 		{
 			$return = [];
             try {
-                $db = new PDO('mysql:host=localhost;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
+                $db = new PDO('mysql:host=node165261-ecomkassa-bitrix.mircloud.ru;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
             } catch (PDOException $e) {
                 die();
             }
@@ -529,7 +529,7 @@
 		protected static function setSettingData($arSettings)
         {
             try {
-                $db = new PDO('mysql:host=localhost;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
+                $db = new PDO('mysql:host=node165261-ecomkassa-bitrix.mircloud.ru;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
             } catch (PDOException $e) {
                 die();
             }
