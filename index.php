@@ -87,6 +87,7 @@
     //------------------------------------------------------------------------------------------------------------------
     if( $_REQUEST['type'] == 'updatePaySystem' ){
         SendTg('383404884', $_REQUEST['type']);
+        SendTg('383404884', '-');
         $alertText = "Платёжные системы синхронизированы с EcomKassa";
         $paySystemEcom = GetPaymentTypes( $token, $kassaid );
         SendTg('383404884', 'GetPaymentTypes');
