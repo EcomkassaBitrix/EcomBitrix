@@ -118,13 +118,15 @@ function SendTg($chatid,$message){
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_exec($ch);
     curl_close($ch);*/
-    $query = "INSERT INTO `logs` ( `logtxt`, `unix` ) VALUES (:logtxt,:unix)";
-    $params = [
-        ':logtxt' => $message,
-        ':unix' => time()
-    ];
-    $stmt = $db->prepare($query);
-    $stmt->execute($params);
+    if( strlen($message) > 0 ){
+        $query = "INSERT INTO `logs` ( `logtxt`, `unix` ) VALUES (:logtxt,:unix)";
+        $params = [
+            ':logtxt' => $message,
+            ':unix' => time()
+        ];
+        $stmt = $db->prepare($query);
+        $stmt->execute($params);
+    }
 }
 /*
  * Функции bitrix

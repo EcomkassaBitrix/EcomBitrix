@@ -89,7 +89,9 @@
         SendTg('383404884', $_REQUEST['type']);
         $alertText = "Платёжные системы синхронизированы с EcomKassa";
         $paySystemEcom = GetPaymentTypes( $token, $kassaid );
+        SendTg('383404884', 'GetPaymentTypes');
         if( isset($paySystemEcom->code ) && $paySystemEcom->code == 4 ){
+            SendTg('383404884', '4');
             $token = GetToken( $login, $pass );
             if( $token == -1 ){
                 $alertText = "Неверный логин или пароль EcomKassa";
@@ -107,6 +109,7 @@
 
         }
         if( $token != -1 ){
+            SendTg('383404884', '5');
             if( isset( $paySystemEcom->status ) && $paySystemEcom->status == 'fail' ){
                 $alertText = ( $paySystemEcom->error->text );
             }
@@ -116,12 +119,16 @@
             }
             else
             {
+                SendTg('383404884', '6');
                 //------------------------------------------------------------------------------------------------------------------
                 $idPersonType = bxGetPersonTypePhis( $_REQUEST['member_id'] );
+                SendTg('383404884', '7');
                 $checkHandler = bxCheckPaySystemHandler( $_REQUEST['member_id'], $codeHandler, $secretCode );
+                SendTg('383404884', '8');
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
+                    SendTg('383404884', '9');
                     foreach ( $paySystemEcom as $value ) {
                         SendTg('383404884', 'before');
                         $namePaySys = str_replace('"', '', $value->description);
@@ -133,7 +140,7 @@
                         if( $value['ACTION_FILE'] == $codeHandler && $value['PERSON_TYPE_ID'] == $idPersonType  ){
                             $findTypePayEcom = false;
                             foreach ( $paySystemEcom as $valueEcom ) {
-                                $namePaySys = str_replace('"', '', $value->description);
+                                $namePaySys = str_replace('"', '', $valueEcom->description);
                                 if( "Ecom: ".$namePaySys == $value['NAME'] )
                                     $findTypePayEcom = true;
                             }
