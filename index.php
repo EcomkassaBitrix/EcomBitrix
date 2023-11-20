@@ -30,8 +30,8 @@
     if( $_REQUEST['type'] == 'updateSettings' ){
         $alertText = "Настройки обновлены";
 
-        if( !$_REQUEST['ecomLogin'] || !$_REQUEST['ecomKassaId'] || !$_REQUEST['emailDefCheck'] || !$_REQUEST['company_email'] || !$_REQUEST['company_sno'] || !$_REQUEST['vatShipment'] || !$_REQUEST['company_inn'] || !$_REQUEST['company_payment_address']
-        || !$_REQUEST['vat100'] || !$_REQUEST['payment_method'] || !$_REQUEST['payment_object'] ){
+        if( !$_REQUEST['ecomLogin'] || !$_REQUEST['ecomPass'] || !$_REQUEST['ecomKassaId'] || !$_REQUEST['emailDefCheck'] || !$_REQUEST['company_email'] || !$_REQUEST['company_sno'] || !$_REQUEST['vatShipment'] || !$_REQUEST['company_inn'] || !$_REQUEST['company_payment_address']
+         || !$_REQUEST['payment_method'] || !$_REQUEST['payment_object'] ){
             $alertText = "Не все поля настроек заполнены";
         } else {
             if( $_REQUEST['ecomPass'] && $_REQUEST['ecomPass'] != "***" ){
