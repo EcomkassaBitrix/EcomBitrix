@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8ca33db-b29f-4834-a21f-751228aefafb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crest.php" beforeDir="false" afterPath="$PROJECT_DIR$/crest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.php" beforeDir="false" afterPath="$PROJECT_DIR$/test.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +15,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="821">
+              <caret line="282" column="77" lean-forward="true" selection-start-line="282" selection-start-column="77" selection-end-line="282" selection-end-column="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="409">
+              <caret line="372" column="72" lean-forward="true" selection-start-line="372" selection-start-column="35" selection-end-line="372" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -33,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="531" column="42" selection-start-line="531" selection-start-column="31" selection-end-line="531" selection-end-column="42" />
+            <state relative-caret-position="392">
+              <caret line="419" column="17" lean-forward="true" selection-start-line="419" selection-start-column="17" selection-end-line="419" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -45,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="70" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="70" />
+            <state relative-caret-position="255">
+              <caret line="15" column="128" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="128" />
             </state>
           </provider>
         </entry>
@@ -59,6 +68,9 @@
       <find>setLog</find>
       <find>/logs</find>
       <find>mysql:host=</find>
+      <find>skinbuy.net</find>
+      <find>skin</find>
+      <find>mircloud</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -68,10 +80,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/install.php" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/test.php" />
         <option value="$PROJECT_DIR$/settings.php" />
         <option value="$PROJECT_DIR$/crest.php" />
+        <option value="$PROJECT_DIR$/lib.php" />
+        <option value="$PROJECT_DIR$/index.php" />
       </list>
     </option>
   </component>
@@ -129,12 +142,12 @@
       <workItem from="1700069221952" duration="3280000" />
       <workItem from="1700137366217" duration="528000" />
       <workItem from="1700141750776" duration="641000" />
-      <workItem from="1700466361881" duration="865000" />
+      <workItem from="1700466361881" duration="2279000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5329000" />
+    <option name="totallyTimeSpent" value="6743000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1416" extended-state="6" />
@@ -169,13 +182,6 @@
     <entry file="file://$PROJECT_DIR$/.htaccess">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Desktop/EcomBitrixV1.0/install.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -195,15 +201,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="70" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="70" />
+        <state relative-caret-position="255">
+          <caret line="15" column="128" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="128" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crest.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="419" column="17" lean-forward="true" selection-start-line="419" selection-start-column="17" selection-end-line="419" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="409">
-          <caret line="531" column="42" selection-start-line="531" selection-start-column="31" selection-end-line="531" selection-end-column="42" />
+          <caret line="372" column="72" lean-forward="true" selection-start-line="372" selection-start-column="35" selection-end-line="372" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="821">
+          <caret line="282" column="77" lean-forward="true" selection-start-line="282" selection-start-column="77" selection-end-line="282" selection-end-column="77" />
         </state>
       </provider>
     </entry>

@@ -8,7 +8,7 @@ function bxSettingsPaySystemHandler( $memberId, $secretCode ){
         ['SETTINGS' => [ 											// Настройки обработчика
             'CURRENCY' => ['RUB'], 								// Список валют, которые поддерживает обработчик
             'CHECKOUT_DATA' => [									// Настройки формы
-                'ACTION_URI' => 'https://skinbuy.net/bitrix2/pay.php', 	// URL, на который будет отправляться форма
+                'ACTION_URI' => 'https://ecomkassa-bitrix.mircloud.ru/pay.php', 	// URL, на который будет отправляться форма
                 'METHOD' => 'POST', 								// Метод отправки формы
                 'FIELDS' => [
                     'EMAIL' => [
@@ -370,7 +370,7 @@ function GetPayUrl( $token, $kassaid, $paymentsType, $email, $totalSumm, $arrayI
                 "total" => (float)$totalSumm
             ],
             "service" => [
-                "callback_url" => "https://skinbuy.net/bitrix2/callback.php?secret=$secret&externalId=$externalId"
+                "callback_url" => "https://ecomkassa-bitrix.mircloud.ru/callback.php?secret=$secret&externalId=$externalId"
             ],
             "timestamp" => date('d.m.y H:i:s')
         ];

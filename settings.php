@@ -5,6 +5,7 @@ define('C_REST_CLIENT_SECRET','PDJZYYTC8x8F2tXL7TyQDNLPvcHDg6dpBEtqpkYu5FyfZ3PSh
 define('C_REST_MYSQL_DBNAME','ecomkassa');//
 define('C_REST_MYSQL_USERNAME','root');//
 define('C_REST_MYSQL_PASSWORD','YEXprx62868');//
+define('C_REST_MYSQL_HOST','node165261-ecomkassa-bitrix.mircloud.ru');//
 
 define('C_REST_FIELD_KASSANAME','URLFORPAYECOMKASSA');//
 define('C_REST_FIELD_PAYNAME','Ссылка оплаты EcomKassa');//
@@ -12,7 +13,7 @@ define('C_REST_FIELD_PAYNAME','Ссылка оплаты EcomKassa');//
 define('C_REST_BLOCK_LOG',true);//
 
 try {
-    $db = new PDO('mysql:host=node165261-ecomkassa-bitrix.mircloud.ru;dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
+    $db = new PDO('mysql:host='.C_REST_MYSQL_HOST.';dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
 } catch (PDOException $e) {
     die();
 }
