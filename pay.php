@@ -51,10 +51,7 @@
     $bxPayToShip = bxSalepaymentItemShipmentList( $_REQUEST['MEMBER_ID'], $_REQUEST['PAYMENT_ID'] );
     $bxPayToBasket = bxSalePaymentItemBasketList( $_REQUEST['MEMBER_ID'], $_REQUEST['PAYMENT_ID'] );
     $saleOrderGet = bxSaleOrderGet( $_REQUEST['MEMBER_ID'], $_REQUEST['ORDER_ID'] );
-    SendTg('383404884', json_encode($_REQUEST));
-    /*SendTg('383404884', json_encode($bxPayToShip));
-    SendTg('383404884', json_encode($bxPayToBasket));
-    SendTg('383404884', json_encode($saleOrderGet));*/
+    SendLog( json_encode($_REQUEST));
     //----------------------------------------------------------------------------------------------------------------------
     $totalPaySum = 0;
     $arrayItems = array();
@@ -68,7 +65,6 @@
                     if( $valueOrder['type'] == 2 ){
                         $paymentObject = "service";
                     }
-                    //SendTg('383404884', json_encode($valueOrder));
                     $valueVat = "none";
                     if( $valueOrder['vatIncluded'] == "N" && $valueOrder['vatRate'] !== null ){//N - не включён
                         $valueOrder['price'] = $valueOrder['price'] * 100;
@@ -97,15 +93,12 @@
                     );
                     array_push($arrayItems, $arrayObj);
                     $totalPaySum = $totalPaySum + (ceil( ($valuePayToBasket['quantity'] * $valueOrder['price']) * 100 )) / 100;
-                    //SendTg('383404884', json_encode($arrayObj));
                 }
             }
         }
         foreach ( $bxPayToShip['result']['paymentItemsShipment'] as $valuePayToShipment ) {
             foreach ( $saleOrderGet['result']['order']['shipments'] as $valueOrder ) {
                 if( $valueOrder['id'] == $valuePayToShipment['shipmentId'] ){
-                    //SendTg('383404884', json_encode($valueOrder));
-                    //SendTg('383404884', json_encode($saleOrderGet));
                     $paymentObject = "service";
                     $arrayObj = array(
                         "name" => $valueOrder['deliveryName'],
@@ -124,7 +117,6 @@
             }
         }
     }
-    //SendTg('383404884', json_encode($arrayItems));
     //-------------------------------------------Перевыпуск просроченного токена--------------------------------------------
     $externalId = format_uuidv4(random_bytes(16));
     $secret = md5( rand(1,10000000) );

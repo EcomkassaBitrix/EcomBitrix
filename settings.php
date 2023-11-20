@@ -1,6 +1,6 @@
 <?php
-define('C_REST_CLIENT_ID','local.6555058a066a92.41541303');//Application ID
-define('C_REST_CLIENT_SECRET','PDJZYYTC8x8F2tXL7TyQDNLPvcHDg6dpBEtqpkYu5FyfZ3PShu');//Application key
+define('C_REST_CLIENT_ID','local.6549e8077cb383.12820727');//Application ID
+define('C_REST_CLIENT_SECRET','cp9a4Smv237bTAu64N9AG6UUOcokbYJeT9gQyIgATn9IUHm0Pq');//Application key
 
 define('C_REST_MYSQL_DBNAME','ecomkassa');//
 define('C_REST_MYSQL_USERNAME','root');//

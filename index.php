@@ -86,13 +86,9 @@
     }
     //------------------------------------------------------------------------------------------------------------------
     if( $_REQUEST['type'] == 'updatePaySystem' ){
-        SendTg('383404884', $_REQUEST['type']);
-        SendTg('383404884', '-');
         $alertText = "Платёжные системы синхронизированы с EcomKassa";
         $paySystemEcom = GetPaymentTypes( $token, $kassaid );
-        SendTg('383404884', 'GetPaymentTypes');
         if( isset($paySystemEcom->code ) && $paySystemEcom->code == 4 ){
-            SendTg('383404884', '4');
             $token = GetToken( $login, $pass );
             if( $token == -1 ){
                 $alertText = "Неверный логин или пароль EcomKassa";
@@ -110,7 +106,6 @@
 
         }
         if( $token != -1 ){
-            SendTg('383404884', '5');
             if( isset( $paySystemEcom->status ) && $paySystemEcom->status == 'fail' ){
                 $alertText = ( $paySystemEcom->error->text );
             }
@@ -120,20 +115,14 @@
             }
             else
             {
-                SendTg('383404884', '6');
                 //------------------------------------------------------------------------------------------------------------------
                 $idPersonType = bxGetPersonTypePhis( $_REQUEST['member_id'] );
-                SendTg('383404884', '7');
                 $checkHandler = bxCheckPaySystemHandler( $_REQUEST['member_id'], $codeHandler, $secretCode );
-                SendTg('383404884', '8');
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
-                    SendTg('383404884', '9');
                     foreach ( $paySystemEcom as $value ) {
-                        SendTg('383404884', 'before');
                         $namePaySys = str_replace('"', '', $value->description);
-                        SendTg('383404884', $namePaySys);
                         bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------

@@ -34,7 +34,6 @@
                     curl_exec($curl);
                     curl_close($curl);
                 }
-                //SendTg('383404884', $paramurl);
             }
         }
         $query = "UPDATE `bills` SET `status` = :status WHERE `id` = :id";

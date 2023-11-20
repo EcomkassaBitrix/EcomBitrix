@@ -1,8 +1,6 @@
 <?php
     require_once (__DIR__.'/lib.php');
 
-
-    //SendTg('383404884', json_encode($_REQUEST));
     if( !isset($_REQUEST['mid']) && !isset($_REQUEST['did']) ){
         exit;
     }

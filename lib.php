@@ -95,7 +95,6 @@ function bxSettingsPaySystemHandler( $memberId, $secretCode ){
 }
 function getPaySystemIcon( $paySystemId ){
     global $db;
-    SendTg('383404884', 'getPaySystemIcon '.$paySystemId);
     $returnCode = 'iVBORw0KGgoAAAANSUhEUgAAASQAAACmCAID...';
     $stmt = $db->prepare("SELECT * FROM logo WHERE `id` = ?");
     $stmt->execute([$paySystemId]);
@@ -105,19 +104,8 @@ function getPaySystemIcon( $paySystemId ){
     }
     return $returnCode;
 }
-function SendTg($chatid,$message){
+function SendLog( $message ){
     global $db;
-    /*$response = array(
-        'chat_id' => $chatid,
-        'text' => $message
-    );
-    $ch = curl_init('https://api.telegram.org/bot' . '' . '/sendMessage');
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_exec($ch);
-    curl_close($ch);*/
     if( strlen($message) > 0 ){
         $query = "INSERT INTO `logs` ( `logtxt`, `unix` ) VALUES (:logtxt,:unix)";
         $params = [
@@ -396,7 +384,7 @@ function GetPayUrl( $token, $kassaid, $paymentsType, $email, $totalSumm, $arrayI
             ],
             "timestamp" => date('d.m.y H:i:s')
         ];
-        SendTg('383404884', json_encode($jayParsedAry));
+        SendLog(json_encode($jayParsedAry));
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode( $jayParsedAry ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
@@ -404,7 +392,7 @@ function GetPayUrl( $token, $kassaid, $paymentsType, $email, $totalSumm, $arrayI
         curl_setopt($curl, CURLOPT_TIMECONDITION, 60);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 60);
         $out = curl_exec($curl);
-        SendTg('383404884', 'ANS ' . $out);
+        SendLog('ANS ' . $out);
         $outJson = json_decode( $out );
 
         curl_close($curl);
@@ -426,8 +414,8 @@ function GetPaymentTypes( $token, $kassaid ){
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 60);
         $out = curl_exec($curl);
         $outJson = json_decode( $out );
-        SendTg('383404884', $out);
-        SendTg('383404884', $paramurl);
+        SendLog($out);
+        SendLog($paramurl);
         curl_close($curl);
         $arrayTypePay = $outJson;
     }
