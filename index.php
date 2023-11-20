@@ -30,34 +30,39 @@
     if( $_REQUEST['type'] == 'updateSettings' ){
         $alertText = "Настройки обновлены";
 
-        if( $_REQUEST['ecomPass'] && $_REQUEST['ecomPass'] != "***" ){
-            $pass = $_REQUEST['ecomPass'];
+        if( !$_REQUEST['ecomLogin'] || !$_REQUEST['ecomKassaId'] || !$_REQUEST['emailDefCheck'] || !$_REQUEST['company_email'] || !$_REQUEST['company_sno'] || !$_REQUEST['vatShipment'] || !$_REQUEST['company_inn'] || !$_REQUEST['company_payment_address']
+        || !$_REQUEST['vat100'] || !$_REQUEST['payment_method'] || !$_REQUEST['payment_object'] ){
+            $alertText = "Не все поля настроек заполнены";
         } else {
-            $pass = $userData['ecomPass'];
-        }
-        $query = "UPDATE `users` SET `ecomLogin` = :ecomLogin, `ecomPass` = :ecomPass, `ecomKassaId` = :ecomKassaId, `emailDefCheck` = :emailDefCheck, `company_email` = :company_email, `company_sno` = :company_sno, `company_inn` = :company_inn, `company_payment_address` = :company_payment_address, `vatShipment` = :vatShipment, `vat100` = :vat100, `payment_method` = :payment_method, `payment_object` = :payment_object WHERE `id` = :id";
-        $params = [
-            ':id' => $userData['id'],
-            ':ecomLogin' => $_REQUEST['ecomLogin'],
-            ':ecomPass' => $pass,
-            ':ecomKassaId' => $_REQUEST['ecomKassaId'],
-            ':emailDefCheck' => $_REQUEST['emailDefCheck'],
-            //О компании
-            ':company_email' => $_REQUEST['company_email'],
-            ':company_sno' => $_REQUEST['company_sno'],
-            ':vatShipment' => $_REQUEST['vatShipment'],
-            ':company_inn' => $_REQUEST['company_inn'],
-            ':company_payment_address' => $_REQUEST['company_payment_address'],
-            ':vat100' => $_REQUEST['vat100'],
-            ':payment_method' => $_REQUEST['payment_method'],
-            ':payment_object' => $_REQUEST['payment_object']
-        ];
-        $stmt = $db->prepare($query);
-        $stmt->execute($params);
+            if( $_REQUEST['ecomPass'] && $_REQUEST['ecomPass'] != "***" ){
+                $pass = $_REQUEST['ecomPass'];
+            } else {
+                $pass = $userData['ecomPass'];
+            }
+            $query = "UPDATE `users` SET `ecomLogin` = :ecomLogin, `ecomPass` = :ecomPass, `ecomKassaId` = :ecomKassaId, `emailDefCheck` = :emailDefCheck, `company_email` = :company_email, `company_sno` = :company_sno, `company_inn` = :company_inn, `company_payment_address` = :company_payment_address, `vatShipment` = :vatShipment, `vat100` = :vat100, `payment_method` = :payment_method, `payment_object` = :payment_object WHERE `id` = :id";
+            $params = [
+                ':id' => $userData['id'],
+                ':ecomLogin' => $_REQUEST['ecomLogin'],
+                ':ecomPass' => $pass,
+                ':ecomKassaId' => $_REQUEST['ecomKassaId'],
+                ':emailDefCheck' => $_REQUEST['emailDefCheck'],
+                //О компании
+                ':company_email' => $_REQUEST['company_email'],
+                ':company_sno' => $_REQUEST['company_sno'],
+                ':vatShipment' => $_REQUEST['vatShipment'],
+                ':company_inn' => $_REQUEST['company_inn'],
+                ':company_payment_address' => $_REQUEST['company_payment_address'],
+                ':vat100' => $_REQUEST['vat100'],
+                ':payment_method' => $_REQUEST['payment_method'],
+                ':payment_object' => $_REQUEST['payment_object']
+            ];
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
 
-        $stmt = $db->prepare("SELECT * FROM users WHERE `member_id` = ?");
-        $stmt->execute([$_REQUEST['member_id']]);
-        $userData = $stmt->fetch(PDO::FETCH_LAZY);
+            $stmt = $db->prepare("SELECT * FROM users WHERE `member_id` = ?");
+            $stmt->execute([$_REQUEST['member_id']]);
+            $userData = $stmt->fetch(PDO::FETCH_LAZY);
+        }
     }
     $codeHandler = "ecomkassa";
     $login = $userData['ecomLogin'];
@@ -117,14 +122,14 @@
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
                     foreach ( $paySystemEcom as $value ) {
-                        bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$value->description, $value->id, $paySystemBitrix );
+                        bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".str_replace('"', '', $value->description), $value->id, $paySystemBitrix );
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
                     foreach ( $paySystemBitrix['result'] as $value ) {
                         if( $value['ACTION_FILE'] == $codeHandler && $value['PERSON_TYPE_ID'] == $idPersonType  ){
                             $findTypePayEcom = false;
                             foreach ( $paySystemEcom as $valueEcom ) {
-                                if( "Ecom: ".$valueEcom->description == $value['NAME'] )
+                                if( "Ecom: ".str_replace('"', '', $value->description) == $value['NAME'] )
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
