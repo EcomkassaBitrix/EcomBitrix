@@ -123,6 +123,8 @@
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
                     foreach ( $paySystemEcom as $value ) {
                         $namePaySys = str_replace('"', '', $value->description);
+                        echo($namePaySys);
+                        exit;
                         bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
