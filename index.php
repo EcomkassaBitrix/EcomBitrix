@@ -122,14 +122,16 @@
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
                     foreach ( $paySystemEcom as $value ) {
-                        bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".str_replace('"', '', $value->description), $value->id, $paySystemBitrix );
+                        $namePaySys = str_replace('"', '', $value->description);
+                        bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
                     foreach ( $paySystemBitrix['result'] as $value ) {
                         if( $value['ACTION_FILE'] == $codeHandler && $value['PERSON_TYPE_ID'] == $idPersonType  ){
                             $findTypePayEcom = false;
                             foreach ( $paySystemEcom as $valueEcom ) {
-                                if( "Ecom: ".str_replace('"', '', $value->description) == $value['NAME'] )
+                                $namePaySys = str_replace('"', '', $value->description);
+                                if( "Ecom: ".$namePaySys == $value['NAME'] )
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
