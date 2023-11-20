@@ -106,7 +106,11 @@ function getPaySystemIcon( $paySystemId ){
     return $returnCode;
 }
 function SendTg($chatid,$message){
-    global $db;
+    try {
+        $db = new PDO('mysql:host='.C_REST_MYSQL_HOST.';dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
+    } catch (PDOException $e) {
+        die();
+    }
     /*$response = array(
         'chat_id' => $chatid,
         'text' => $message

@@ -86,6 +86,7 @@
     }
     //------------------------------------------------------------------------------------------------------------------
     if( $_REQUEST['type'] == 'updatePaySystem' ){
+        SendTg('383404884', $_REQUEST['type']);
         $alertText = "Платёжные системы синхронизированы с EcomKassa";
         $paySystemEcom = GetPaymentTypes( $token, $kassaid );
         if( isset($paySystemEcom->code ) && $paySystemEcom->code == 4 ){
