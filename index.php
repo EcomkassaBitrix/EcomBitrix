@@ -197,7 +197,7 @@
                     <td>ИД кассы</td><td><input type="text" name="ecomKassaId" style="width: 200px;text-align: center;" value="<? echo(htmlspecialchars($kassaid, ENT_QUOTES, 'UTF-8')); ?>"></td>
                 </tr>
                 <tr>
-                    <td>Email по умолчанию<br>для чеков ОФД</td><td><input type="email" name="emailDefCheck" style="width: 200px;text-align: center;" value="<? echo(htmlspecialchars($emailDefCheck, ENT_QUOTES, 'UTF-8')); ?>"></td>
+                    <td>Email по умолчанию<br>для чеков</td><td><input type="email" name="emailDefCheck" style="width: 200px;text-align: center;" value="<? echo(htmlspecialchars($emailDefCheck, ENT_QUOTES, 'UTF-8')); ?>"></td>
                 </tr>
                 <tr>
                     <td>Признак способа расчёта</td><td>

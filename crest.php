@@ -576,43 +576,20 @@
 
 		public static function setLog($arData, $type = '')
 		{
-			$return = false;
-			if(!defined("C_REST_BLOCK_LOG") || C_REST_BLOCK_LOG !== true)
-			{
-				if(defined("C_REST_LOGS_DIR"))
-				{
-					$path = C_REST_LOGS_DIR;
-				}
-				else
-				{
-					$path = __DIR__ . '/logs/';
-				}
-				$path .= date("Y-m-d/H") . '/';
-
-				if (!file_exists($path))
-				{
-					@mkdir($path, 0775, true);
-				}
-
-				$path .= time() . '_' . $type . '_' . rand(1, 9999999) . 'log';
-				if(!defined("C_REST_LOG_TYPE_DUMP") || C_REST_LOG_TYPE_DUMP !== true)
-				{
-					$jsonLog = static::wrapData($arData);
-					if ($jsonLog === false)
-					{
-						$return = file_put_contents($path . '_backup.txt', var_export($arData, true));
-					}
-					else
-					{
-						$return = file_put_contents($path . '.json', $jsonLog);
-					}
-				}
-				else
-				{
-					$return = file_put_contents($path . '.txt', var_export($arData, true));
-				}
-			}
-			return $return;
+            try {
+                $db = new PDO('mysql:host='.C_REST_MYSQL_HOST.';dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
+            } catch (PDOException $e) {
+                die();
+            }
+            $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
+            $params = [
+                ':logtxt' => static::wrapData($arData),
+                ':logtype' => $type,
+                ':unix' => time()
+            ];
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+			return true;
 		}
 
 		/**
