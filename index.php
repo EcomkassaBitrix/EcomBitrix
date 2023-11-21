@@ -274,7 +274,7 @@
                     <td>ИНН</td><td><input type="text" name="company_inn" style="width: 300px;text-align: center;" value="<? echo(htmlspecialchars($companyInn, ENT_QUOTES, 'UTF-8')); ?>"></td>
                 </tr>
                 <tr>
-                    <td>Адрес</td><td><input type="text" name="company_payment_address" style="width: 300px;text-align: center;" value="<? echo(htmlspecialchars($companyPaymentAddress, ENT_QUOTES, 'UTF-8')); ?>"></td>
+                    <td>Место продаж</td><td><input type="text" name="company_payment_address" style="width: 300px;text-align: center;" value="<? echo(htmlspecialchars($companyPaymentAddress, ENT_QUOTES, 'UTF-8')); ?>"></td>
                 </tr>
             </table>
             <table style="width:400px;text-align: right;margin-top: 5px;">
