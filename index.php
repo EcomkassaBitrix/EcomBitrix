@@ -78,6 +78,10 @@
     $companySno = $userData['company_sno'];
     $vatShipment = $userData['vatShipment'];
     $vatOrder = $userData['vatOrder'];
+    $vatOrderCheck = 0;
+    if( $vatOrder != null ){
+        $vatOrderCheck = 1;
+    }
     $companyEmail = $userData['company_email'];
     $companyInn = $userData['company_inn'];
     $vat100 = $userData['vat100'];
