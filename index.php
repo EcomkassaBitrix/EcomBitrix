@@ -182,7 +182,7 @@
             if( document.getElementById('vatOrderCheck').checked  ){
                 document.getElementById('vatOrder').style.display = 'block';
             }else{
-                document.getElementById('vatOrder').style.display = 'none';
+                document.getElementById('vatOrder').style.display = 'table-row';
             }
         }
         window.onload = ChangeVatOrder;
