@@ -201,7 +201,7 @@
             ");
         }
     ?>
-    <div style="height: 430px;">
+    <div style="height: 480px;">
         <form action='index.php' method="post">
             <table style="font-size: 12px;width:415px;text-align: right;border: 2px solid #b7b7b7;border-radius: 15px; padding: 5px;">
                 <tr>
