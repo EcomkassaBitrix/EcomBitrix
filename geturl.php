@@ -33,6 +33,10 @@
     $vat100 = $userData['vat100'];
     $emailDefCheck = $userData['emailDefCheck'];
     $vatValueShipment = $userData['vatShipment'];
+    $vatValueOrder = $userData['vatOrder'];
+    if( $vatValueOrder != 'none' && $vatValueOrder != null ){//none - без ндс
+        $vatValueOrder = "vat".$vatValueOrder;
+    }
     $companyArray = array(
         "email" => $userData['company_email'],
         "sno" => $userData['company_sno'],
@@ -103,6 +107,9 @@
             }
             if( $vat100 == 1 && $valueOrder['TAX_RATE'] > 0 ){
                 $valueVat = "vat".( 100 + $valueOrder['TAX_RATE'] );
+            }
+            if( $vatValueOrder != null ){
+                $valueVat = $vatValueOrder;
             }
             $arrayObj = array(
                 "name" => $valueOrder['PRODUCT_NAME'],

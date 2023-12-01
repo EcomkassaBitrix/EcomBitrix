@@ -38,6 +38,13 @@
     $paymentMethodDef = $userData['payment_method'];
     $vat100 = $userData['vat100'];
     $vatValueShipment = $userData['vatShipment'];
+    if( $vatValueShipment != 'none' ){
+        $vatValueShipment = "vat".$vatValueShipment;
+    }
+    $vatValueOrder = $userData['vatOrder'];
+    if( $vatValueOrder != 'none' && $vatValueOrder != null ){//none - без ндс
+        $vatValueOrder = "vat".$vatValueOrder;
+    }
     $companyArray = array(
         "email" => $userData['company_email'],
         "sno" => $userData['company_sno'],
@@ -78,6 +85,9 @@
                     }
                     if( $vat100 == 1 && $valueOrder['vatRate'] > 0 ){
                         $valueVat = "vat".( 100 + $valueOrder['vatRate']*100 );
+                    }
+                    if( $vatValueOrder != null ){
+                        $valueVat = $vatValueOrder;
                     }
                     $arrayObj = array(
                             "name" => $valueOrder['name'],

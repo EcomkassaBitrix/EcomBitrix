@@ -30,7 +30,7 @@
     if( $_REQUEST['type'] == 'updateSettings' ){
         $alertText = "Настройки обновлены";
 
-        if( !$_REQUEST['ecomLogin'] || !$_REQUEST['ecomPass'] || !$_REQUEST['ecomKassaId'] || !$_REQUEST['emailDefCheck'] || !$_REQUEST['company_email'] || !$_REQUEST['company_sno'] || !$_REQUEST['vatShipment'] || !$_REQUEST['company_inn'] || !$_REQUEST['company_payment_address']
+        if( !$_REQUEST['ecomLogin'] || !$_REQUEST['ecomPass'] || !$_REQUEST['ecomKassaId'] || !$_REQUEST['emailDefCheck'] || !$_REQUEST['company_email'] || !$_REQUEST['company_sno'] || !$_REQUEST['vatShipment'] || !$_REQUEST['vatOrder'] || !$_REQUEST['company_inn'] || !$_REQUEST['company_payment_address']
          || !$_REQUEST['payment_method'] || !$_REQUEST['payment_object'] ){
             $alertText = "Не все поля настроек заполнены";
         } else {
@@ -39,7 +39,11 @@
             } else {
                 $pass = $userData['ecomPass'];
             }
-            $query = "UPDATE `users` SET `ecomLogin` = :ecomLogin, `ecomPass` = :ecomPass, `ecomKassaId` = :ecomKassaId, `emailDefCheck` = :emailDefCheck, `company_email` = :company_email, `company_sno` = :company_sno, `company_inn` = :company_inn, `company_payment_address` = :company_payment_address, `vatShipment` = :vatShipment, `vat100` = :vat100, `payment_method` = :payment_method, `payment_object` = :payment_object WHERE `id` = :id";
+            $vatOrder = null;
+            if( $_REQUEST['vatOrderCheck'] ){
+                $vatOrder = $_REQUEST['vatOrder'];
+            }
+            $query = "UPDATE `users` SET `ecomLogin` = :ecomLogin, `ecomPass` = :ecomPass, `ecomKassaId` = :ecomKassaId, `emailDefCheck` = :emailDefCheck, `company_email` = :company_email, `company_sno` = :company_sno, `company_inn` = :company_inn, `company_payment_address` = :company_payment_address, `vatShipment` = :vatShipment, `vatOrder` = :vatOrder, `vat100` = :vat100, `payment_method` = :payment_method, `payment_object` = :payment_object WHERE `id` = :id";
             $params = [
                 ':id' => $userData['id'],
                 ':ecomLogin' => $_REQUEST['ecomLogin'],
@@ -50,6 +54,7 @@
                 ':company_email' => $_REQUEST['company_email'],
                 ':company_sno' => $_REQUEST['company_sno'],
                 ':vatShipment' => $_REQUEST['vatShipment'],
+                ':vatOrder' => $vatOrder,
                 ':company_inn' => $_REQUEST['company_inn'],
                 ':company_payment_address' => $_REQUEST['company_payment_address'],
                 ':vat100' => $_REQUEST['vat100'],
@@ -72,6 +77,7 @@
     $emailDefCheck = $userData['emailDefCheck'];
     $companySno = $userData['company_sno'];
     $vatShipment = $userData['vatShipment'];
+    $vatOrder = $userData['vatOrder'];
     $companyEmail = $userData['company_email'];
     $companyInn = $userData['company_inn'];
     $vat100 = $userData['vat100'];
@@ -167,6 +173,16 @@
             accent-color: #232323;
         }
     </style>
+    <script>
+        function ChangeVatOrder() {
+            if( document.getElementById('vatOrderCheck').checked  ){
+                document.getElementById('vatOrder').style.display = 'block';
+            }else{
+                document.getElementById('vatOrder').style.display = 'none';
+            }
+        }
+        window.onload = ChangeVatOrder;
+    </script>
 </head>
 <body style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;margin-top: 0px;padding: 0px;">
     <?
@@ -227,6 +243,26 @@
                             <option value="agent_commission"       <? echo( ('agent_commission' == $payment_object) ? 'selected' : '' ) ?> >агентское вознаграждение</option>
                             <option value="composite"              <? echo( ('composite' == $payment_object) ? 'selected' : '' ) ?> >составной предмет расчета</option>
                             <option value="another"                <? echo( ('another' == $payment_object) ? 'selected' : '' ) ?> >иной предмет расчета</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Использовать фиксированный НДС на все товары и услуги</td>
+                    <td style="text-align: left;">
+                        <label><input type="radio" name="vatOrderCheck" id="vatOrderCheck" value="1" <? echo( (1 == $vatOrderCheck) ? 'checked' : '' ) ?> onchange="ChangeVatOrder()"> ДА</label> <label><input type="radio" name="vatOrderCheck" value="0" <? echo( (0 == $vatOrderCheck) ? 'checked' : '' ) ?> onchange="ChangeVatOrder()"> НЕТ</label>
+                    </td>
+                </tr>
+                <tr id="vatOrder" style="display: none;">
+                    <td>НДС за товар/услугу</td><td>
+                        <select style="width: 200px;text-align: center;" name="vatOrder">
+                            <option value="none"                <? echo( ('none' == $vatOrder) ? 'selected' : '' ) ?> >БЕЗ НДС</option>
+                            <option value="10"                  <? echo( ('10' == $vatOrder) ? 'selected' : '' ) ?> >10%</option>
+                            <option value="18"                  <? echo( ('18' == $vatOrder) ? 'selected' : '' ) ?>>18%</option>
+                            <option value="20"                  <? echo( ('20' == $vatOrder) ? 'selected' : '' ) ?>>20%</option>
+                            <option value="110"                 <? echo( ('110' == $vatOrder) ? 'selected' : '' ) ?>>10/110%</option>
+                            <option value="118"                 <? echo( ('118' == $vatOrder) ? 'selected' : '' ) ?>>18/118%</option>
+                            <option value="120"                 <? echo( ('120' == $vatOrder) ? 'selected' : '' ) ?>>20/120%</option>
+                            <option value="0"                   <? echo( ('0' == $vatOrder) ? 'selected' : '' ) ?>>0%</option>
                         </select>
                     </td>
                 </tr>
