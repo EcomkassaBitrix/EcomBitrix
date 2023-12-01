@@ -25,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="630">
-              <caret line="259" column="46" lean-forward="true" selection-start-line="259" selection-start-column="24" selection-end-line="259" selection-end-column="46" />
+              <caret line="259" column="36" selection-start-line="259" selection-start-column="36" selection-end-line="259" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -209,12 +209,12 @@
       <workItem from="1700466361881" duration="2337000" />
       <workItem from="1700515384713" duration="5128000" />
       <workItem from="1700556143069" duration="1615000" />
-      <workItem from="1701470872288" duration="2932000" />
+      <workItem from="1701470872288" duration="3026000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16476000" />
+    <option name="totallyTimeSpent" value="16570000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1416" extended-state="6" />
@@ -311,7 +311,7 @@
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
-          <caret line="259" column="46" lean-forward="true" selection-start-line="259" selection-start-column="24" selection-end-line="259" selection-end-column="46" />
+          <caret line="259" column="36" selection-start-line="259" selection-start-column="36" selection-end-line="259" selection-end-column="36" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
