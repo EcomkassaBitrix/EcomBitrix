@@ -257,7 +257,7 @@
                     </td>
                 </tr>
                 <tr id="vatOrder" style="display: table-row;">
-                    <td>Значение НДС</td>
+                    <td>НДС на товары и услуги</td>
                     <td>
                         <select style="width: 200px;text-align: center;" name="vatOrder">
                             <option value="none"                <? echo( ('none' == $vatOrder) ? 'selected' : '' ) ?> >БЕЗ НДС</option>
