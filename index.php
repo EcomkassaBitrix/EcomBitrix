@@ -256,7 +256,7 @@
                         <label><input type="radio" name="vatOrderCheck" id="vatOrderCheck" value="1" <? echo( (1 == $vatOrderCheck) ? 'checked' : '' ) ?> onchange="ChangeVatOrder()"> ДА</label> <label><input type="radio" name="vatOrderCheck" value="0" <? echo( (0 == $vatOrderCheck) ? 'checked' : '' ) ?> onchange="ChangeVatOrder()"> НЕТ</label>
                     </td>
                 </tr>
-                <tr id="vatOrder" style="display: none;">
+                <tr id="vatOrder" style="display: block;">
                     <td>НДС за товар/услугу</td><td>
                         <select style="width: 200px;text-align: center;" name="vatOrder">
                             <option value="none"                <? echo( ('none' == $vatOrder) ? 'selected' : '' ) ?> >БЕЗ НДС</option>
