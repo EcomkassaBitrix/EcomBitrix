@@ -180,9 +180,9 @@
     <script>
         function ChangeVatOrder() {
             if( document.getElementById('vatOrderCheck').checked  ){
-                document.getElementById('vatOrder').style.display = 'block';
-            }else{
                 document.getElementById('vatOrder').style.display = 'table-row';
+            }else{
+                document.getElementById('vatOrder').style.display = 'none';
             }
         }
         window.onload = ChangeVatOrder;
@@ -256,8 +256,9 @@
                         <label><input type="radio" name="vatOrderCheck" id="vatOrderCheck" value="1" <? echo( (1 == $vatOrderCheck) ? 'checked' : '' ) ?> onchange="ChangeVatOrder()"> ДА</label> <label><input type="radio" name="vatOrderCheck" value="0" <? echo( (0 == $vatOrderCheck) ? 'checked' : '' ) ?> onchange="ChangeVatOrder()"> НЕТ</label>
                     </td>
                 </tr>
-                <tr id="vatOrder" style="display: block;">
-                    <td>Значение НДС</td><td>
+                <tr id="vatOrder" style="display: table-row;">
+                    <td>Значение НДС</td>
+                    <td>
                         <select style="width: 200px;text-align: center;" name="vatOrder">
                             <option value="none"                <? echo( ('none' == $vatOrder) ? 'selected' : '' ) ?> >БЕЗ НДС</option>
                             <option value="10"                  <? echo( ('10' == $vatOrder) ? 'selected' : '' ) ?> >10%</option>
