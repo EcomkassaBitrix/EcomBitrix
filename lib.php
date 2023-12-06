@@ -324,12 +324,12 @@ function bxUpdateDealField( $memberid, $url, $dealid )
                 'fields' => [
                     "FIELD_NAME" =>  C_REST_FIELD_KASSANAME,
                     "EDIT_FORM_LABEL" =>  C_REST_FIELD_PAYNAME,
-                    "listLabel" =>  C_REST_FIELD_PAYNAME,
+                    /*"listLabel" =>  C_REST_FIELD_PAYNAME,
                     "formLabel" =>  C_REST_FIELD_PAYNAME,
                     "filterLabel" =>  C_REST_FIELD_PAYNAME,
                     "title" =>  C_REST_FIELD_PAYNAME,
-                    "type" =>  "url",
-                    "USER_TYPE_ID" =>  "url"
+                    "type" =>  "string",*/
+                    "USER_TYPE_ID" =>  "string"//url
                 ]
             ]
         );
