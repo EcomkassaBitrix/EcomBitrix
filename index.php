@@ -158,6 +158,7 @@
             }
         }
     }
+    echo(json_encode($jsonDealField = CRest::call( 'crm.userfield.fields',$_REQUEST['member_id'] )));
 ?>
 <html lang="ru">
 <head>
