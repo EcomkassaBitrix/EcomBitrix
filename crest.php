@@ -299,7 +299,7 @@
                 $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
                 $params = [
                     ':logtxt' => '99',
-                    ':logtype' => count($arData),
+                    ':logtype' => 'test',
                     ':unix' => time()
                 ];
                 $stmt = $db->prepare($query);
