@@ -132,7 +132,7 @@
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
-                    $arraybatch = array();
+                    $arraybatch = [];
                     foreach ( $paySystemEcom as $value ) {
                         $namePaySys = str_replace('"', '', $value->description);
                         $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
@@ -178,7 +178,7 @@
                             'halt' => '0',
                             'cmd' => $arraybatch,
                         ]);*/
-                        CRest::callBatch( $_REQUEST['member_id'],  $arraybatch );
+                        CRest::callBatch( $_REQUEST['member_id'], array( $arraybatch ) );
                     }
                 }
             }
@@ -236,7 +236,7 @@
         <form action='index.php' method="post">
             <table style="font-size: 12px;width:415px;text-align: right;border: 2px solid #b7b7b7;border-radius: 15px; padding: 5px;">
                 <tr>
-                    <td style="color: #bfbfbf">Основные настройки</td><td></td>
+                    <td style="color: #bfbfbf">Основные настройки.</td><td></td>
                 </tr>
                 <tr>
                     <td>Логин EcomKassa</td><td><input type="email" name="ecomLogin" style="width: 200px;text-align: center;" value="<? echo(htmlspecialchars($login, ENT_QUOTES, 'UTF-8')); ?>"></td>
