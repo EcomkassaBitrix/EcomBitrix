@@ -154,10 +154,7 @@ function bxSalePaySystemAdd( $memberId, $codeHandler, $personTypeId, $namePay, $
         }
     }
     if( $paysystemCheck == false ){
-
-        $salePaysystemAdd = CRest::call(
-            'sale.paysystem.add', $memberId,
-            [
+        return [
                 'NAME' => $namePay,                    // Название платежной системы
                 'PERSON_TYPE_ID' => $personTypeId,                             // ID типа плательщика
                 'ACTIVE' => 'Y',                                            // Флаг активности платежной системы
@@ -171,12 +168,12 @@ function bxSalePaySystemAdd( $memberId, $codeHandler, $personTypeId, $namePay, $
                     ]
                 ]
 
-            ]
-        );
+            ];
+        /*
         if( !isset( $salePaysystemAdd['result'] ) ){
             echo("Техническая ошибка, возможно недостаточно прав, необходимы права 'paysystem' или иная ошибка -  свяжитесь с издателем приложения");
             exit;
-        }
+        }*/
     }
     else if( $sendActiveId > 0 ){
         CRest::call( "sale.paysystem.update", $memberId, [
