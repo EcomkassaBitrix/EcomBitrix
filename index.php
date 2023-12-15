@@ -128,6 +128,7 @@
                 //------------------------------------------------------------------------------------------------------------------
                 $idPersonType = bxGetPersonTypePhis( $_REQUEST['member_id'] );
                 $checkHandler = bxCheckPaySystemHandler( $_REQUEST['member_id'], $codeHandler, $secretCode );
+                $arraPor = 0;
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
@@ -136,16 +137,18 @@
                         $namePaySys = str_replace('"', '', $value->description);
                         $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
                         if( !$resultAddPaySystem <= 0){
-                            $arraybatch[] = ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem ];
+                            $arraybatch[ $arraPor ] = ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem ];
+                            $arraPor++;
                         }
                         else if( $resultAddPaySystem < 0 ){
-                            $arraybatch[] = ['method' => 'sale.paysystem.update', 'params'=> [
+                            $arraybatch[ $arraPor ] = ['method' => 'sale.paysystem.update', 'params'=> [
                                 'id' => abs( $resultAddPaySystem ),
                                 'fields' => [
                                     "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
                                 ]
                             ]
                             ];
+                            $arraPor++;
                         }
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
@@ -158,13 +161,14 @@
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
-                                $arraybatch[] = ['method' => 'sale.paysystem.update', 'params'=> [
+                                $arraybatch[ $arraPor ] = ['method' => 'sale.paysystem.update', 'params'=> [
                                     'id' => $value['ID'],
                                     'fields' => [
                                         "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
                                     ]
                                 ]
                                 ];
+                                $arraPor++;
                             }
                         }
                     }
