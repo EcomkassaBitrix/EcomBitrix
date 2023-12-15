@@ -178,7 +178,7 @@
                             'halt' => '0',
                             'cmd' => $arraybatch,
                         ]);*/
-                        CRest::callBatch( $_REQUEST['member_id'], $arraybatch );
+                        CRest::callBatch( $_REQUEST['member_id'], array( $arraybatch ) );
                     }
                 }
             }
