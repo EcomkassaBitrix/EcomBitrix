@@ -265,9 +265,8 @@
 		 *
 		 */
 
-		public static function callBatch($arData, $halt = 0)
+		public static function callBatch($memberId, $arData, $halt = 0)
 		{
-            $memberId = '-';//Костыль
 			$arResult = [];
 			if(is_array($arData))
 			{

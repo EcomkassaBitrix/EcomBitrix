@@ -168,9 +168,12 @@
                     }
                     //--------------------------------------------------------------------------------------------------
                     if( count( $arraybatch ) > 0 ){
-                        CRest::call('batch', $_REQUEST['member_id'],[
-                            'halt' => '1',
+                        /*CRest::call('batch', $_REQUEST['member_id'],[
+                            'halt' => '0',
                             'cmd' => $arraybatch,
+                        ]);*/
+                        CRest::callBatch( $_REQUEST['member_id'],[
+                            $arraybatch
                         ]);
                     }
                 }
