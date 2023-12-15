@@ -69,7 +69,7 @@
             $userData = $stmt->fetch(PDO::FETCH_LAZY);
         }
     }
-    $codeHandler = "ecomkassa";
+    $codeHandler = "ecomkassabitrix";
     $login = $userData['ecomLogin'];
     $pass = $userData['ecomPass'];
     $kassaid = $userData['ecomKassaId'];
