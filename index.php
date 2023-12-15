@@ -136,15 +136,16 @@
                         $namePaySys = str_replace('"', '', $value->description);
                         $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
                         if( !$resultAddPaySystem <= 0){
-                            $arraybatch["Ecom: ".$namePaySys] = 'sale.paysystem.add?'.http_build_query($resultAddPaySystem);
+                            $arraybatch["Ecom:".$namePaySys] = ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem ];
                         }
                         else if( $resultAddPaySystem < 0 ){
-                            $arraybatch["Ecom: ".$namePaySys] = 'sale.paysystem.update?'.http_build_query([
-                                    'id' => abs( $resultAddPaySystem ),
-                                    'fields' => [
-                                        "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
-                                    ]
-                                ]);
+                            $arraybatch["Ecom:".$namePaySys] = ['method' => 'sale.paysystem.update', 'params'=> [
+                                'id' => abs( $resultAddPaySystem ),
+                                'fields' => [
+                                    "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
+                                ]
+                            ]
+                            ];
                         }
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
@@ -157,12 +158,13 @@
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
-                                $arraybatch["Ecom: ".$namePaySys] = 'sale.paysystem.update?'.http_build_query([
-                                        'id' => $value['ID'],
-                                        'fields' => [
-                                            "ACTIVE" => 'N', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
-                                        ]
-                                    ]);
+                                $arraybatch["Ecom:".$namePaySys] = ['method' => 'sale.paysystem.update', 'params'=> [
+                                    'id' => $value['ID'],
+                                    'fields' => [
+                                        "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
+                                    ]
+                                ]
+                                ];
                             }
                         }
                     }
@@ -230,7 +232,7 @@
         <form action='index.php' method="post">
             <table style="font-size: 12px;width:415px;text-align: right;border: 2px solid #b7b7b7;border-radius: 15px; padding: 5px;">
                 <tr>
-                    <td style="color: #bfbfbf">Основные настройки1</td><td></td>
+                    <td style="color: #bfbfbf">Основные настройки</td><td></td>
                 </tr>
                 <tr>
                     <td>Логин EcomKassa</td><td><input type="email" name="ecomLogin" style="width: 200px;text-align: center;" value="<? echo(htmlspecialchars($login, ENT_QUOTES, 'UTF-8')); ?>"></td>
