@@ -130,21 +130,22 @@
                 $checkHandler = bxCheckPaySystemHandler( $_REQUEST['member_id'], $codeHandler, $secretCode );
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
-                    sleep(1);
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
                     $arraybatch = [];
                     foreach ( $paySystemEcom as $value ) {
                         $namePaySys = str_replace('"', '', $value->description);
                         $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
-                        if( $resultAddPaySystem !== 1){
+                        if( !$resultAddPaySystem <= 0){
                             $arraybatch["Ecom: ".$namePaySys] = 'sale.paysystem.add?'.http_build_query($resultAddPaySystem);
                         }
-                    }
-                    if( count( $arraybatch ) > 0 ){
-                        CRest::call('batch', $_REQUEST['member_id'],[
-                            'halt' => '0',
-                            'cmd' => $arraybatch,
-                        ]);
+                        else if( $resultAddPaySystem < 0 ){
+                            $arraybatch["Ecom: ".$namePaySys] = 'sale.paysystem.update?'.http_build_query([
+                                    'id' => abs( $resultAddPaySystem ),
+                                    'fields' => [
+                                        "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
+                                    ]
+                                ]);
+                        }
                     }
                     //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
                     foreach ( $paySystemBitrix['result'] as $value ) {
@@ -156,15 +157,21 @@
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
-                                sleep(2);
-                                CRest::call( "sale.paysystem.update", $_REQUEST['member_id'], [
-                                    'id' => $value['ID'],
-                                    'fields' => [
-                                        "ACTIVE" => 'N', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
-                                    ]
-                                ] );
+                                $arraybatch["Ecom: ".$namePaySys] = 'sale.paysystem.update?'.http_build_query([
+                                        'id' => $value['ID'],
+                                        'fields' => [
+                                            "ACTIVE" => 'N', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
+                                        ]
+                                    ]);
                             }
                         }
+                    }
+                    //--------------------------------------------------------------------------------------------------
+                    if( count( $arraybatch ) > 0 ){
+                        CRest::call('batch', $_REQUEST['member_id'],[
+                            'halt' => '0',
+                            'cmd' => $arraybatch,
+                        ]);
                     }
                 }
             }
