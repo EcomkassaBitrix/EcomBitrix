@@ -291,10 +291,6 @@
 						}
 					}
 				}
-
-
-
-
                 try {
                     $db = new PDO('mysql:host='.C_REST_MYSQL_HOST.';dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
                 } catch (PDOException $e) {
@@ -302,14 +298,12 @@
                 }
                 $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
                 $params = [
-                    ':logtxt' => 'test',
-                    ':logtype' => 'test',
+                    ':logtxt' => static::wrapData($arData),
+                    ':logtype' => '22',
                     ':unix' => time()
                 ];
                 $stmt = $db->prepare($query);
                 $stmt->execute($params);
-
-
 
 				if(!empty($arDataRest))
 				{
