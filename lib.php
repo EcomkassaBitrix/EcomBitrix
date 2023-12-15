@@ -175,16 +175,16 @@ function bxSalePaySystemAdd( $memberId, $codeHandler, $personTypeId, $namePay, $
             exit;
         }*/
     }
-    else if( $sendActiveId > 0 ){
-        return -$sendActiveId;
-        /*CRest::call( "sale.paysystem.update", $memberId, [
+    /*else if( $sendActiveId > 0 ){
+        return $sendActiveId;
+        CRest::call( "sale.paysystem.update", $memberId, [
             'id' => $sendActiveId,
             'fields' => [
                 "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $personTypeId, "BX_REST_HANDLER" => $codeHandler
             ]
-        ] );*/
-    }
-    return 0;
+        ] );
+    }*/
+    return $sendActiveId;
 }
 function bxGetPersonTypePhis( $memberId ){
     $idPersonType = -1;

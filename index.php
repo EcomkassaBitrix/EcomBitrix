@@ -136,24 +136,13 @@
                     foreach ( $paySystemEcom as $value ) {
                         $namePaySys = str_replace('"', '', $value->description);
                         $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
-                        if( !$resultAddPaySystem <= 0){
+                        if( is_scalar( $resultAddPaySystem ) ){
                             $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem] ;
                             $arraPor++;
                         }
-                        else if( $resultAddPaySystem < 0 ){
-                            $module = abs( $resultAddPaySystem );
-
-                            $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
-                            $params = [
-                                ':logtxt' => ' '.$module,
-                                ':logtype' => 'testk',
-                                ':unix' => time()
-                            ];
-                            $stmt = $db->prepare($query);
-                            $stmt->execute($params);
-
+                        else if( $resultAddPaySystem > 0 ){
                             $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.update', 'params'=> [
-                                'id' => $module,
+                                'id' => $resultAddPaySystem,
                                 'fields' => [
                                     "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
                                 ]
@@ -246,7 +235,7 @@
         <form action='index.php' method="post">
             <table style="font-size: 12px;width:415px;text-align: right;border: 2px solid #b7b7b7;border-radius: 15px; padding: 5px;">
                 <tr>
-                    <td style="color: #bfbfbf">Основные настройки.</td><td></td>
+                    <td style="color: #bfbfbf">Основные настройки</td><td></td>
                 </tr>
                 <tr>
                     <td>Логин EcomKassa</td><td><input type="email" name="ecomLogin" style="width: 200px;text-align: center;" value="<? echo(htmlspecialchars($login, ENT_QUOTES, 'UTF-8')); ?>"></td>
