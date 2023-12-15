@@ -298,7 +298,7 @@
                 }
                 $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
                 $params = [
-                    ':logtxt' => '99',
+                    ':logtxt' => json_encode($arData),
                     ':logtype' => 'test',
                     ':unix' => time()
                 ];
