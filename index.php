@@ -142,6 +142,16 @@
                         }
                         else if( $resultAddPaySystem < 0 ){
                             $module = abs( $resultAddPaySystem );
+
+                            $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
+                            $params = [
+                                ':logtxt' => ' '.$module,
+                                ':logtype' => 'testk',
+                                ':unix' => time()
+                            ];
+                            $stmt = $db->prepare($query);
+                            $stmt->execute($params);
+
                             $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.update', 'params'=> [
                                 'id' => $module,
                                 'fields' => [
