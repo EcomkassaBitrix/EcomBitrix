@@ -130,6 +130,7 @@
                 $checkHandler = bxCheckPaySystemHandler( $_REQUEST['member_id'], $codeHandler, $secretCode );
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
+                    sleep(1);
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
                     foreach ( $paySystemEcom as $value ) {
                         $namePaySys = str_replace('"', '', $value->description);
@@ -146,6 +147,7 @@
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
+                                sleep(1);
                                 CRest::call( "sale.paysystem.update", $_REQUEST['member_id'], [
                                     'id' => $value['ID'],
                                     'fields' => [
