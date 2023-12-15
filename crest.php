@@ -302,7 +302,7 @@
                 }
                 $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
                 $params = [
-                    ':logtxt' => 'test',
+                    ':logtxt' => static::wrapData($arDataRest),
                     ':logtype' => 'test',
                     ':unix' => time()
                 ];
