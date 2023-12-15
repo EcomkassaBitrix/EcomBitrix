@@ -149,7 +149,7 @@ function bxSalePaySystemAdd( $memberId, $codeHandler, $personTypeId, $namePay, $
         if( $value['ACTION_FILE'] == $codeHandler && $value['PERSON_TYPE_ID'] == $personTypeId && $value['NAME'] == $namePay ){
             $paysystemCheck = true;
             if( $value['ACTIVE'] != "Y" ){
-                $sendActiveId = intval($value['ID']);
+                $sendActiveId = $value['ID'];
             }
         }
     }
