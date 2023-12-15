@@ -137,17 +137,17 @@
                         $namePaySys = str_replace('"', '', $value->description);
                         $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
                         if( !$resultAddPaySystem <= 0){
-                            $arraybatch[ $arraPor ] = ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem ];
+                            array_push($arraybatch, array('method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem ));
                             $arraPor++;
                         }
                         else if( $resultAddPaySystem < 0 ){
-                            $arraybatch[ $arraPor ] = ['method' => 'sale.paysystem.update', 'params'=> [
+                            array_push($arraybatch,array('method' => 'sale.paysystem.update', 'params'=> [
                                 'id' => abs( $resultAddPaySystem ),
                                 'fields' => [
                                     "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
                                 ]
                             ]
-                            ];
+                            ));
                             $arraPor++;
                         }
                     }
@@ -161,13 +161,12 @@
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
-                                $arraybatch[ $arraPor ] = ['method' => 'sale.paysystem.update', 'params'=> [
+                                array_push($arraybatch, array('method' => 'sale.paysystem.update', 'params'=> [
                                     'id' => $value['ID'],
                                     'fields' => [
                                         "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
                                     ]
-                                ]
-                                ];
+                                ]));
                                 $arraPor++;
                             }
                         }
