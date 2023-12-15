@@ -291,20 +291,6 @@
 						}
 					}
 				}
-                try {
-                    $db = new PDO('mysql:host='.C_REST_MYSQL_HOST.';dbname='.C_REST_MYSQL_DBNAME, C_REST_MYSQL_USERNAME, C_REST_MYSQL_PASSWORD);
-                } catch (PDOException $e) {
-                    die();
-                }
-                $query = "INSERT INTO `bxLogs` (`logtxt`, `logtype`, `unix`) VALUES (:logtxt,:logtype,:unix)";
-                $params = [
-                    ':logtxt' => json_encode($arData),
-                    ':logtype' => 'test',
-                    ':unix' => time()
-                ];
-                $stmt = $db->prepare($query);
-                $stmt->execute($params);
-
 				if(!empty($arDataRest))
 				{
 					$arDataRest[ 'halt' ] = $halt;

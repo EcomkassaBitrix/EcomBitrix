@@ -169,21 +169,7 @@ function bxSalePaySystemAdd( $memberId, $codeHandler, $personTypeId, $namePay, $
                 ]
 
             ];
-        /*
-        if( !isset( $salePaysystemAdd['result'] ) ){
-            echo("Техническая ошибка, возможно недостаточно прав, необходимы права 'paysystem' или иная ошибка -  свяжитесь с издателем приложения");
-            exit;
-        }*/
     }
-    /*else if( $sendActiveId > 0 ){
-        return $sendActiveId;
-        CRest::call( "sale.paysystem.update", $memberId, [
-            'id' => $sendActiveId,
-            'fields' => [
-                "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $personTypeId, "BX_REST_HANDLER" => $codeHandler
-            ]
-        ] );
-    }*/
     return $sendActiveId;
 }
 function bxGetPersonTypePhis( $memberId ){
