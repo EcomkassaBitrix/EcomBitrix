@@ -141,8 +141,9 @@
                             $arraPor++;
                         }
                         else if( $resultAddPaySystem < 0 ){
+                            $module = abs( $resultAddPaySystem );
                             $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.update', 'params'=> [
-                                'id' => abs( $resultAddPaySystem ),
+                                'id' => $module,
                                 'fields' => [
                                     "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonType, "BX_REST_HANDLER" => $codeHandler
                                 ]
