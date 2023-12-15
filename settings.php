@@ -1,8 +1,12 @@
 <?php
 //define('C_REST_CLIENT_ID','local.6549e8077cb383.12820727');//Application ID
 //define('C_REST_CLIENT_SECRET','cp9a4Smv237bTAu64N9AG6UUOcokbYJeT9gQyIgATn9IUHm0Pq');//Application key
-define('C_REST_CLIENT_ID','app.657ad879d77408.57395847');//Application ID
-define('C_REST_CLIENT_SECRET','xzLeOmfBmWh3bUfivOHIg4Ec4l9cmeOkxAUDssA7DBigtSAjSg');//Application key
+
+//define('C_REST_CLIENT_ID','app.657ad879d77408.57395847');//Application ID
+//define('C_REST_CLIENT_SECRET','xzLeOmfBmWh3bUfivOHIg4Ec4l9cmeOkxAUDssA7DBigtSAjSg');//Application key
+
+define('C_REST_CLIENT_ID','local.656a6363bbbc19.94705575');//Application ID
+define('C_REST_CLIENT_SECRET','ZbDdtUVP8bESIOoXxzAOmSqjBo6vld0vVPHpZ0yqfgpqYmTefJ');//Application key
 
 define('C_REST_MYSQL_DBNAME','ecomkassa');//
 define('C_REST_MYSQL_USERNAME','root');//
