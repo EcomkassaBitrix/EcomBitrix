@@ -358,7 +358,7 @@
         <div style="position:relative;width: 400px;font-size: 11px;">
             Адрес вебхука создания ссылки на оплату
             <br>
-            <input style="width: 400px;font-size: 10px;padding: 5px;margin-top: 3px;" onClick="this.select();" value = '<? echo("https://ecomkassa-bitrix.mircloud.ru/geturl.php?mid=".$_REQUEST['member_id']."&sec=".substr($secretCode,0,8)."&did=[ИД СДЕЛКИ]&tid=[ИД СПОСОБА ОПЛАТЫ - 103 - сбербанк]");?>' readonly>
+            <input style="width: 400px;font-size: 10px;padding: 5px;margin-top: 3px;" onClick="this.select();" value = '<? echo("https://b24.ecomkassa.ru/geturl.php?mid=".$_REQUEST['member_id']."&sec=".substr($secretCode,0,8)."&did=[ИД СДЕЛКИ]&tid=[ИД СПОСОБА ОПЛАТЫ - 103 - сбербанк]");?>' readonly>
         </div>
         <div style="position:relative;width: 400px;margin-top:10px;font-size: 11px;">
             Адрес входящиего вебхука - будет срабатывать при успешной оплате
