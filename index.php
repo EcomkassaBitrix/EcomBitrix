@@ -39,34 +39,49 @@
             } else {
                 $pass = $userData['ecomPass'];
             }
-            $vatOrder = null;
-            if( $_REQUEST['vatOrderCheck'] ){
-                $vatOrder = $_REQUEST['vatOrder'];
+            $token = GetToken( $_REQUEST['ecomLogin'], $pass );
+            if( $token == -1 ){
+                $alertText = "Неверный логин или пароль EcomKassa";
             }
-            $query = "UPDATE `users` SET `ecomLogin` = :ecomLogin, `ecomPass` = :ecomPass, `ecomKassaId` = :ecomKassaId, `emailDefCheck` = :emailDefCheck, `company_email` = :company_email, `company_sno` = :company_sno, `company_inn` = :company_inn, `company_payment_address` = :company_payment_address, `vatShipment` = :vatShipment, `vatOrder` = :vatOrder, `vat100` = :vat100, `payment_method` = :payment_method, `payment_object` = :payment_object WHERE `id` = :id";
-            $params = [
-                ':id' => $userData['id'],
-                ':ecomLogin' => $_REQUEST['ecomLogin'],
-                ':ecomPass' => $pass,
-                ':ecomKassaId' => $_REQUEST['ecomKassaId'],
-                ':emailDefCheck' => $_REQUEST['emailDefCheck'],
-                //О компании
-                ':company_email' => $_REQUEST['company_email'],
-                ':company_sno' => $_REQUEST['company_sno'],
-                ':vatShipment' => $_REQUEST['vatShipment'],
-                ':vatOrder' => $vatOrder,
-                ':company_inn' => $_REQUEST['company_inn'],
-                ':company_payment_address' => $_REQUEST['company_payment_address'],
-                ':vat100' => $_REQUEST['vat100'],
-                ':payment_method' => $_REQUEST['payment_method'],
-                ':payment_object' => $_REQUEST['payment_object']
-            ];
-            $stmt = $db->prepare($query);
-            $stmt->execute($params);
+            else{
+                $query = "UPDATE `users` SET `tokenEcomKassa` = :token WHERE `id` = :id";
+                $params = [
+                    ':id' => $userData['id'],
+                    ':token' => $token
+                ];
+                $stmt = $db->prepare($query);
+                $stmt->execute($params);
 
-            $stmt = $db->prepare("SELECT * FROM users WHERE `member_id` = ?");
-            $stmt->execute([$_REQUEST['member_id']]);
-            $userData = $stmt->fetch(PDO::FETCH_LAZY);
+                $vatOrder = null;
+                if( $_REQUEST['vatOrderCheck'] ){
+                    $vatOrder = $_REQUEST['vatOrder'];
+                }
+                $query = "UPDATE `users` SET `ecomLogin` = :ecomLogin, `ecomPass` = :ecomPass, `ecomKassaId` = :ecomKassaId, `emailDefCheck` = :emailDefCheck, `company_email` = :company_email, `company_sno` = :company_sno, `company_inn` = :company_inn, `company_payment_address` = :company_payment_address, `vatShipment` = :vatShipment, `vatOrder` = :vatOrder, `vat100` = :vat100, `payment_method` = :payment_method, `payment_object` = :payment_object WHERE `id` = :id";
+                $params = [
+                    ':id' => $userData['id'],
+                    ':ecomLogin' => $_REQUEST['ecomLogin'],
+                    ':ecomPass' => $pass,
+                    ':ecomKassaId' => $_REQUEST['ecomKassaId'],
+                    ':emailDefCheck' => $_REQUEST['emailDefCheck'],
+                    //О компании
+                    ':company_email' => $_REQUEST['company_email'],
+                    ':company_sno' => $_REQUEST['company_sno'],
+                    ':vatShipment' => $_REQUEST['vatShipment'],
+                    ':vatOrder' => $vatOrder,
+                    ':company_inn' => $_REQUEST['company_inn'],
+                    ':company_payment_address' => $_REQUEST['company_payment_address'],
+                    ':vat100' => $_REQUEST['vat100'],
+                    ':payment_method' => $_REQUEST['payment_method'],
+                    ':payment_object' => $_REQUEST['payment_object']
+                ];
+                $stmt = $db->prepare($query);
+                $stmt->execute($params);
+
+                $stmt = $db->prepare("SELECT * FROM users WHERE `member_id` = ?");
+                $stmt->execute([$_REQUEST['member_id']]);
+                $userData = $stmt->fetch(PDO::FETCH_LAZY);
+
+            }
         }
     }
     $codeHandler = "ecomkassabitrix";
