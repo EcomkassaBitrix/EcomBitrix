@@ -376,7 +376,7 @@
             <input style="width: 400px;font-size: 10px;padding: 5px;margin-top: 3px;" onClick="this.select();" value = '<? echo("https://b24.ecomkassa.ru/geturl.php?mid=".$_REQUEST['member_id']."&sec=".substr($secretCode,0,8)."&did=[ИД СДЕЛКИ]&tid=[ИД СПОСОБА ОПЛАТЫ - 103 - сбербанк]");?>' readonly>
         </div>
         <div style="position:relative;width: 400px;margin-top:10px;font-size: 11px;">
-            Адрес входящиего вебхука - будет срабатывать при успешной оплате
+            Адрес входящего вебхука - будет срабатывать при успешной оплате
             <br>
             <form action='index.php' method="post" style="width: 400px;">
                 <input style="width: 300px;font-size: 11px;padding: 5px;margin-top: 3px;" name="webHookUrl" value = '<? echo(htmlspecialchars($webHookUrl, ENT_QUOTES, 'UTF-8')); ?>' placeholder="http://example.com/Deal-Id={{ID}}">
