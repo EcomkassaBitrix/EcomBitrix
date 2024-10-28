@@ -110,7 +110,7 @@
         $buttonUpdatePaySystem = 'hidden';
     }
     //------------------------------------------------------------------------------------------------------------------
-    if( $_REQUEST['type'] == 'updatePaySystem' ){
+    if( $_REQUEST['type'] == 'updatePaySystemPh' || $_REQUEST['type'] == 'updatePaySystemUr' ){
         $alertText = "Платёжные системы синхронизированы с EcomKassa";
         $paySystemEcom = GetPaymentTypes( $token, $kassaid );
         if( isset($paySystemEcom->code ) && $paySystemEcom->code == 4 ){
@@ -128,7 +128,6 @@
                 $stmt->execute($params);
                 $paySystemEcom = GetPaymentTypes( $token, $kassaid );
             }
-
         }
         if( $token != -1 ){
             if( isset( $paySystemEcom->status ) && $paySystemEcom->status == 'fail' ){
@@ -140,17 +139,66 @@
             }
             else
             {
-                //------------------------------------------------------------------------------------------------------------------
-                $idPersonType = bxGetPersonTypePhis( $_REQUEST['member_id'] );
+                $idPersonType = -1;
+                $idPersonTypeUr = -1;
+                $arraybatch = array();
+                if( $_REQUEST['type'] == 'updatePaySystemUr' ){
+                    $idPersonTypeUr = bxGetPersonTypeUr( $_REQUEST['member_id'] );
+                }
+                else if( $_REQUEST['type'] == 'updatePaySystemPh' ) {
+                    $idPersonType = bxGetPersonTypePhis($_REQUEST['member_id']);
+                }
                 $checkHandler = bxCheckPaySystemHandler( $_REQUEST['member_id'], $codeHandler, $secretCode );
                 $arraPor = 0;
+                if( $checkHandler > 0 && $idPersonTypeUr > 0 ){
+                    //---------------------Здесь создаём систему----------------------------
+                    $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
+                    foreach ( $paySystemEcom as $value ) {
+                        $namePaySys = str_replace('"', '', $value->description);
+                        $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonTypeUr, "Екомкасса: ".$namePaySys, $value->id, $paySystemBitrix );
+                        if( is_array( $resultAddPaySystem ) ){
+                            $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem] ;
+                            $arraPor++;
+                        }
+                        else if( $resultAddPaySystem > 0 ){
+                            $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.update', 'params'=> [
+                                'id' => $resultAddPaySystem,
+                                'fields' => [
+                                    "ACTIVE" => 'Y', "PERSON_TYPE_ID" => $idPersonTypeUr, "BX_REST_HANDLER" => $codeHandler
+                                ]
+                            ]
+                            ];
+                            $arraPor++;
+                        }
+                    }
+                    //--------------------------------Выключение платёжки при отключении в ecom-------------------------------------
+                    foreach ( $paySystemBitrix['result'] as $value ) {
+                        if( $value['ACTION_FILE'] == $codeHandler && $value['PERSON_TYPE_ID'] == $idPersonTypeUr  ){
+                            $findTypePayEcom = false;
+                            foreach ( $paySystemEcom as $valueEcom ) {
+                                $namePaySys = str_replace('"', '', $valueEcom->description);
+                                if( "Екомкасса: ".$namePaySys == $value['NAME'] )
+                                    $findTypePayEcom = true;
+                            }
+                            if( $findTypePayEcom == false ){
+                                $arraybatch[$arraPor] = ['method' => 'sale.paysystem.update', 'params'=> [
+                                    'id' => $value['ID'],
+                                    'fields' => [
+                                        "ACTIVE" => 'N', "PERSON_TYPE_ID" => $idPersonTypeUr, "BX_REST_HANDLER" => $codeHandler
+                                    ]
+                                ]];
+                                $arraPor++;
+                            }
+                        }
+                    }
+                }
+                //------------------------------------------------------------------------------------------------------------------
                 if( $checkHandler > 0 && $idPersonType > 0 ){
                     //---------------------Здесь создаём систему----------------------------
                     $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['member_id'] );
-                    $arraybatch = array();
                     foreach ( $paySystemEcom as $value ) {
                         $namePaySys = str_replace('"', '', $value->description);
-                        $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Ecom: ".$namePaySys, $value->id, $paySystemBitrix );
+                        $resultAddPaySystem = bxSalePaySystemAdd( $_REQUEST['member_id'], $codeHandler, $idPersonType, "Екомкасса: ".$namePaySys, $value->id, $paySystemBitrix );
                         if( is_array( $resultAddPaySystem ) ){
                             $arraybatch[$arraPor] =  ['method' => 'sale.paysystem.add', 'params'=> $resultAddPaySystem] ;
                             $arraPor++;
@@ -172,7 +220,7 @@
                             $findTypePayEcom = false;
                             foreach ( $paySystemEcom as $valueEcom ) {
                                 $namePaySys = str_replace('"', '', $valueEcom->description);
-                                if( "Ecom: ".$namePaySys == $value['NAME'] )
+                                if( "Екомкасса: ".$namePaySys == $value['NAME'] )
                                     $findTypePayEcom = true;
                             }
                             if( $findTypePayEcom == false ){
@@ -186,10 +234,10 @@
                             }
                         }
                     }
-                    //--------------------------------------------------------------------------------------------------
-                    if( count( $arraybatch ) > 0 ){
-                        CRest::callBatch( $_REQUEST['member_id'],  $arraybatch );
-                    }
+                }
+                //--------------------------------------------------------------------------------------------------
+                if( count( $arraybatch ) > 0 ){
+                    CRest::callBatch( $_REQUEST['member_id'],  $arraybatch );
                 }
             }
         }
@@ -233,7 +281,7 @@
     <?
         if( $alertText  ){
             echo("
-                <div id='alertText' style='padding:4px;width: 410px;background-color: red;color: white;font-size: 14px;text-align: center;border-radius: 15px;'><h3>$alertText</h3></div>
+                <div id='alertText' style='padding:1px;width: 410px;background-color: red;color: white;font-size: 14px;text-align: center;border-radius: 10px;'><h3>$alertText</h3></div>
                 <script>
                  setTimeout(function closeAlert() {
                     document.getElementById( 'alertText' ).remove();
@@ -242,7 +290,7 @@
             ");
         }
     ?>
-    <div style="height: 460px;">
+    <div style="height: 475px;">
         <form action='index.php' method="post">
             <table style="font-size: 12px;width:415px;text-align: right;border: 2px solid #b7b7b7;border-radius: 15px; padding: 5px;">
                 <tr>
@@ -359,10 +407,19 @@
                     <td>Место продаж</td><td><input type="text" name="company_payment_address" style="width: 300px;text-align: center;" value="<? echo(htmlspecialchars($companyPaymentAddress, ENT_QUOTES, 'UTF-8')); ?>"></td>
                 </tr>
             </table>
-            <table style="width:400px;text-align: right;margin-top: 5px;">
+            <table style="width:420px;margin-top: 5px;text-align: center;">
                 <tr>
-                    <td><input type="submit" value="ОБНОВИТЬ СПИСОК ПЛАТЁЖНЫХ СИСТЕМ" style="width:300px;padding: 4px;color: white;border: none;font-weight: bold;background-color: rgba(50, 94, 135, 0.87);cursor: pointer;border-radius: 5px;" onclick="document.getElementById('typeAction').value ='updatePaySystem';this.value='Отправляю...'" <? echo($buttonUpdatePaySystem); ?> ></td>
-                    <td><input type="submit" value="СОХРАНИТЬ" style="width:100px;padding: 4px;color: white;border: none;font-weight: bold;background-color: rgba(50, 94, 135, 0.87);cursor: pointer;border-radius: 5px;" onclick="document.getElementById('typeAction').value ='updateSettings';this.value='Отправляю...'" ></td>
+                    <td></td>
+                    <td style="font-size: 11px;color: #6e6e6e" <? echo($buttonUpdatePaySystem); ?>>Обновить список платёжных систем</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="СОХРАНИТЬ" style="width:100px;padding: 4px;color: white;border: none;font-weight: bold;background-color: rgba(50, 94, 135, 0.87);cursor: pointer;border-radius: 5px;" onclick="document.getElementById('typeAction').value ='updateSettings';this.value='Отправляю...'" >
+                    </td>
+                    <td>
+                        <input type="submit" value="Оплата Юр лицами" style="width:140px;padding: 4px;color: white;border: none;font-weight: bold;background-color: rgba(50, 94, 135, 0.87);cursor: pointer;border-radius: 5px;" onclick="document.getElementById('typeAction').value ='updatePaySystemUr';this.value='Отправляю...'" <? echo($buttonUpdatePaySystem); ?> >
+                        <input type="submit" value="Оплата Физ лицами" style="width:140px;padding: 4px;color: white;border: none;font-weight: bold;background-color: rgba(50, 94, 135, 0.87);cursor: pointer;border-radius: 5px;" onclick="document.getElementById('typeAction').value ='updatePaySystemPh';this.value='Отправляю...'" <? echo($buttonUpdatePaySystem); ?> >
+                    </td>
                 </tr>
             </table>
             <input name="member_id" value="<?echo($_REQUEST['member_id']);?>" type="hidden" >
