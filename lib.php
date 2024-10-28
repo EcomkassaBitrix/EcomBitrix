@@ -184,7 +184,26 @@ function bxGetPersonTypePhis( $memberId ){
         exit;
     }
     foreach ($salePersonTypeList['result']['personTypes'] as $value) {
-        if( $value['code'] == "CRM_CONTACT" || $value['active'] == "Y" ){
+        if( $value['code'] == "CRM_CONTACT" && $value['active'] == "Y" ){
+            $idPersonType = $value['id'];
+            break;
+        }
+    }
+    return $idPersonType;
+}
+function bxGetPersonTypeUr( $memberId ){
+    $idPersonType = -1;
+    $salePersonTypeList = CRest::call( "sale.persontype.list", $memberId );
+    if( !isset( $salePersonTypeList['result'] ) ){
+        echo("Техническая ошибка, возможно недостаточно прав");
+        exit;
+    }
+    if( !isset( $salePersonTypeList['result']['personTypes'] ) ){
+        echo("Техническая ошибка, возможно недостаточно прав");
+        exit;
+    }
+    foreach ($salePersonTypeList['result']['personTypes'] as $value) {
+        if( $value['code'] == "CRM_COMPANY" && $value['active'] == "Y" ){
             $idPersonType = $value['id'];
             break;
         }
