@@ -130,6 +130,12 @@
     //-------------------------------------------Перевыпуск просроченного токена--------------------------------------------
     $externalId = format_uuidv4(random_bytes(16));
     $secret = md5( rand(1,10000000) );
+    if( !((int)$_REQUEST['TYPE_PAYSYSTEM'] > 1) ){
+        $result = [ 'PAYMENT_ERRORS' => [  "Неверный способ оплаты" ] ];
+        header('Content-Type:application/json; charset=UTF-8');
+        echo json_encode($result);
+        exit;
+    }
     $urlPay = GetPayUrl( $token, $kassaid, $_REQUEST['TYPE_PAYSYSTEM'], $emailCheckDef, $totalPaySum, $arrayItems, $companyArray, $externalId, $secret );
     if( isset($urlPay->error->code) && $urlPay->error->code == 11 ){
         $token = GetToken( $login, $pass );
