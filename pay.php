@@ -59,6 +59,8 @@
     $bxPayToBasket = bxSalePaymentItemBasketList( $_REQUEST['MEMBER_ID'], $_REQUEST['PAYMENT_ID'] );
     $saleOrderGet = bxSaleOrderGet( $_REQUEST['MEMBER_ID'], $_REQUEST['ORDER_ID'] );
     SendLog( json_encode($_REQUEST));
+    $typePaySystem = $_REQUEST['TYPE_PAYSYSTEM'];
+
     //----------------------------------------------------------------------------------------------------------------------
     $totalPaySum = 0;
     $arrayItems = array();
@@ -130,13 +132,48 @@
     //-------------------------------------------Перевыпуск просроченного токена--------------------------------------------
     $externalId = format_uuidv4(random_bytes(16));
     $secret = md5( rand(1,10000000) );
-    if( !((int)$_REQUEST['TYPE_PAYSYSTEM'] > 1) ){
+
+    if( !((int)$typePaySystem > 1) ){
+        $paySystemEcom = GetPaymentTypes( $token, $kassaid );
+        $paySystemBitrix = bxGetAllPaySystem( $_REQUEST['MEMBER_ID'] );
+
+        if( isset($paySystemEcom->code ) && $paySystemEcom->code == 4 ){
+            $token = GetToken( $login, $pass );
+            if( $token == -1 ){
+                $result = [ 'PAYMENT_ERRORS' => [  "Неверный логин или пароль EcomKassa" ] ];
+                header('Content-Type:application/json; charset=UTF-8');
+                echo json_encode($result);
+                exit;
+            }
+            $query = "UPDATE `users` SET `tokenEcomKassa` = :token WHERE `id` = :id";
+            $params = [
+                ':id' => $userData['id'],
+                ':token' => $token
+            ];
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            $paySystemEcom = GetPaymentTypes( $token, $kassaid );
+        }
+        foreach ( $paySystemBitrix['result'] as $value ) {
+            if( $value['ID'] == $_REQUEST['BX_SYSTEM_PARAMS']['PAYSYSTEM_ID'] )
+            {
+                foreach ( $paySystemEcom as $valueEcom ) {
+                    $namePaySys = str_replace('"', '', $valueEcom->description);
+                    if( "Екомкасса: ".$namePaySys == $value['NAME'] ) {
+                        $typePaySystem = $valueEcom->id;
+                    }
+                }
+            }
+        }
+    }
+
+    if( !((int)$typePaySystem > 1) ){
         $result = [ 'PAYMENT_ERRORS' => [  "Неверный способ оплаты" ] ];
         header('Content-Type:application/json; charset=UTF-8');
         echo json_encode($result);
         exit;
     }
-    $urlPay = GetPayUrl( $token, $kassaid, $_REQUEST['TYPE_PAYSYSTEM'], $emailCheckDef, $totalPaySum, $arrayItems, $companyArray, $externalId, $secret );
+    $urlPay = GetPayUrl( $token, $kassaid, $typePaySystem, $emailCheckDef, $totalPaySum, $arrayItems, $companyArray, $externalId, $secret );
     if( isset($urlPay->error->code) && $urlPay->error->code == 11 ){
         $token = GetToken( $login, $pass );
         if( $token == -1 ){
@@ -152,7 +189,7 @@
         ];
         $stmt = $db->prepare($query);
         $stmt->execute($params);
-        $urlPay = GetPayUrl( $token, $kassaid, $_REQUEST['TYPE_PAYSYSTEM'], $emailCheckDef, $totalPaySum, $arrayItems, $companyArray, $externalId, $secret );
+        $urlPay = GetPayUrl( $token, $kassaid, $typePaySystem, $emailCheckDef, $totalPaySum, $arrayItems, $companyArray, $externalId, $secret );
     }
     //----------------------------------------------------------------------------------------------------------------------
     if( isset( $urlPay->code )  ){
