@@ -60,7 +60,6 @@
     $saleOrderGet = bxSaleOrderGet( $_REQUEST['MEMBER_ID'], $_REQUEST['ORDER_ID'] );
     SendLog( json_encode($_REQUEST));
     $typePaySystem = $_REQUEST['TYPE_PAYSYSTEM'];
-
     //----------------------------------------------------------------------------------------------------------------------
     $totalPaySum = 0;
     $arrayItems = array();
@@ -161,12 +160,24 @@
                     $namePaySys = str_replace('"', '', $valueEcom->description);
                     if( "Екомкасса: ".$namePaySys == $value['NAME'] ) {
                         $typePaySystem = $valueEcom->id;
+                        $resultUpdateSystem = CRest::call(
+                            "sale.paysystem.settings.update", $_REQUEST['MEMBER_ID'],
+                            [
+                                'id' => $value['ID'] ,
+                                'PERSON_TYPE_ID' => $value['PERSON_TYPE_ID'],
+                                'SETTINGS' => [
+                                    'TYPE_PAYSYSTEM' => [
+                                        'TYPE' => 'VALUE',
+                                        'VALUE' => "".$valueEcom->id
+                                    ]
+                                ]
+                            ]
+                        );
                     }
                 }
             }
         }
     }
-
     if( !((int)$typePaySystem > 1) ){
         $result = [ 'PAYMENT_ERRORS' => [  "Неверный способ оплаты" ] ];
         header('Content-Type:application/json; charset=UTF-8');
