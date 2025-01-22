@@ -350,9 +350,13 @@
                     <td>
                         <select style="width: 200px;text-align: center;" name="vatOrder">
                             <option value="none"                <? echo( ('none' == $vatOrder) ? 'selected' : '' ) ?> >БЕЗ НДС</option>
+                            <option value="5"                  <? echo( ('5' == $vatOrder) ? 'selected' : '' ) ?> >5%</option>
+                            <option value="7"                  <? echo( ('7' == $vatOrder) ? 'selected' : '' ) ?> >7%</option>
                             <option value="10"                  <? echo( ('10' == $vatOrder) ? 'selected' : '' ) ?> >10%</option>
                             <option value="18"                  <? echo( ('18' == $vatOrder) ? 'selected' : '' ) ?>>18%</option>
                             <option value="20"                  <? echo( ('20' == $vatOrder) ? 'selected' : '' ) ?>>20%</option>
+                            <option value="105"                 <? echo( ('105' == $vatOrder) ? 'selected' : '' ) ?>>5/105%</option>
+                            <option value="107"                 <? echo( ('107' == $vatOrder) ? 'selected' : '' ) ?>>7/107%</option>
                             <option value="110"                 <? echo( ('110' == $vatOrder) ? 'selected' : '' ) ?>>10/110%</option>
                             <option value="118"                 <? echo( ('118' == $vatOrder) ? 'selected' : '' ) ?>>18/118%</option>
                             <option value="120"                 <? echo( ('120' == $vatOrder) ? 'selected' : '' ) ?>>20/120%</option>
@@ -364,9 +368,13 @@
                     <td>НДС на доставку</td><td>
                         <select style="width: 200px;text-align: center;" name="vatShipment">
                             <option value="none"                <? echo( ('none' == $vatShipment) ? 'selected' : '' ) ?> >БЕЗ НДС</option>
+                            <option value="5"                  <? echo( ('5' == $vatShipment) ? 'selected' : '' ) ?> >5%</option>
+                            <option value="7"                  <? echo( ('7' == $vatShipment) ? 'selected' : '' ) ?> >7%</option>
                             <option value="10"                  <? echo( ('10' == $vatShipment) ? 'selected' : '' ) ?> >10%</option>
                             <option value="18"                  <? echo( ('18' == $vatShipment) ? 'selected' : '' ) ?>>18%</option>
                             <option value="20"                  <? echo( ('20' == $vatShipment) ? 'selected' : '' ) ?>>20%</option>
+                            <option value="105"                 <? echo( ('105' == $vatShipment) ? 'selected' : '' ) ?>>5/105%</option>
+                            <option value="107"                 <? echo( ('107' == $vatShipment) ? 'selected' : '' ) ?>>7/107%</option>
                             <option value="110"                 <? echo( ('110' == $vatShipment) ? 'selected' : '' ) ?>>10/110%</option>
                             <option value="118"                 <? echo( ('118' == $vatShipment) ? 'selected' : '' ) ?>>18/118%</option>
                             <option value="120"                 <? echo( ('120' == $vatShipment) ? 'selected' : '' ) ?>>20/120%</option>
