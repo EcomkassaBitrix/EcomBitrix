@@ -445,4 +445,55 @@ function GetToken( $loginUser, $passUser ){
     }
     return $tokenResult;
 }
-?>
+
+
+
+/**
+ * Логирование запросов
+ */
+function logRequest($memberID, $paymentID, $orderID, $requestData, $responseData = null, $status = 'success') {
+    global $db;
+    
+    try {
+        $query = "INSERT INTO request_logs 
+                  (member_id, payment_id, order_id, request_data, response_data, status, created_at) 
+                  VALUES (:member_id, :payment_id, :order_id, :request_data, :response_data, :status, NOW())";
+        
+        $stmt = $db->prepare($query);
+        $stmt->execute([
+            ':member_id' => $memberID,
+            ':payment_id' => $paymentID,
+            ':order_id' => $orderID,
+            ':request_data' => is_array($requestData) ? json_encode($requestData, JSON_UNESCAPED_UNICODE) : $requestData,
+            ':response_data' => is_array($responseData) ? json_encode($responseData, JSON_UNESCAPED_UNICODE) : $responseData,
+            ':status' => $status
+        ]);
+    } catch (Exception $e) {
+        // Если логирование не удалось, просто игнорируем
+        error_log("Log error: " . $e->getMessage());
+    }
+}
+
+/**
+ * Логирование ошибок
+ */
+function logError($memberID, $errorCode, $errorMessage, $context = []) {
+    global $db;
+    
+    try {
+        $query = "INSERT INTO error_logs 
+                  (member_id, error_code, error_message, context, created_at) 
+                  VALUES (:member_id, :error_code, :error_message, :context, NOW())";
+        
+        $stmt = $db->prepare($query);
+        $stmt->execute([
+            ':member_id' => $memberID,
+            ':error_code' => $errorCode,
+            ':error_message' => $errorMessage,
+            ':context' => json_encode($context, JSON_UNESCAPED_UNICODE)
+        ]);
+    } catch (Exception $e) {
+        error_log("Log error: " . $e->getMessage());
+    }
+}
+    ?>
