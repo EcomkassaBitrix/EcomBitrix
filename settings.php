@@ -6,7 +6,7 @@ define('C_REST_CLIENT_SECRET','JnowMh03hp1ythtWRoMH5uD82OP5vWGVerx3PWjpxGmWw0FfN
 
 define('C_REST_MYSQL_DBNAME','ecomkassa');//
 define('C_REST_MYSQL_USERNAME','root');//
-define('C_REST_MYSQL_PASSWORD','YEXprx62868');//
+define('C_REST_MYSQL_PASSWORD','000');//
 define('C_REST_MYSQL_HOST','node165261-ecomkassa-bitrix.mircloud.ru');//
 
 define('C_REST_FIELD_KASSANAME','URLFORPAYECOMKASSA');//
