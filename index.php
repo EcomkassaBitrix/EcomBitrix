@@ -387,7 +387,7 @@
                     </td>
                 </tr>
                 <tr id="vat100" style="display: table-row;">
-                    <td>Использовать ставки НДС 10/110 и 20/120</td>
+                    <td>Использовать ставки НДС 10/110 и 22/122</td>
                     <td style="text-align: left;">
                         <label><input type="radio" name="vat100" value="1" <? echo( (1 == $vat100) ? 'checked' : '' ) ?> > ДА</label> <label><input type="radio" name="vat100" value="0" <? echo( (0 == $vat100) ? 'checked' : '' ) ?> > НЕТ</label>
                     </td>
